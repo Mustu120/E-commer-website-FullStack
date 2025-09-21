@@ -1,28 +1,21 @@
 import express from 'express';
-import {
-    listProducts,
-    addProduct,
-    removeProduct,
-    getProductById
-} from '../controllers/productController.js';
-import upload from '../middleware/multer.js';
+import { 
+    placeOrder, 
+    userOrders, 
+    allOrders, 
+    updateStatus
+} from '../controllers/orderController.js';
 import authUser from '../middleware/auth.js';
 import adminAuth from '../middleware/adminAuth.js';
 
-const productRouter = express.Router();
+const orderRouter = express.Router();
 
-// --- Admin Routes ---
-productRouter.post('/add', authUser, adminAuth, upload.fields([
-    { name: 'image1', maxCount: 1 },
-    { name: 'image2', maxCount: 1 },
-    { name: 'image3', maxCount: 1 },
-    { name: 'image4', maxCount: 1 }
-]), addProduct);
+// User Routes
+orderRouter.post('/place', authUser, placeOrder); // For COD
+orderRouter.get('/userorders', authUser, userOrders);
 
-productRouter.delete('/:id', authUser, adminAuth, removeProduct);
+// Admin Routes
+orderRouter.get('/list', authUser, adminAuth, allOrders);
+orderRouter.patch('/status', authUser, adminAuth, updateStatus);
 
-// --- Public Routes ---
-productRouter.get('/list', listProducts);
-productRouter.get('/:id', getProductById);
-
-export default productRouter;
+export default orderRouter;
