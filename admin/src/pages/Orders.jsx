@@ -13,7 +13,7 @@ const Orders = ({ url, token }) => {
     }
     try {
       // Use the 'Authorization' header as per best practices
-      const response = await axios.get(`${url}/api/order/list`, {
+      const response = await axios.get(`₹{url}/api/order/list`, {
         headers: { 'Authorization': `Bearer ${token}` },
       });
       if (response.data.success) {
@@ -30,7 +30,7 @@ const Orders = ({ url, token }) => {
   const statusUpdateHandler = async (event, orderId) => {
     const newStatus = event.target.value;
     try {
-      const response = await axios.patch(`${url}/api/order/status`,
+      const response = await axios.patch(`₹{url}/api/order/status`,
         { orderId, status: newStatus },
         { headers: { 'Authorization': `Bearer ${token}` } }
       );
