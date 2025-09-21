@@ -1,4 +1,3 @@
-// routes/productRoute.js (Corrected)
 import express from 'express';
 import {
     listProducts,
@@ -7,13 +6,12 @@ import {
     getProductById
 } from '../controllers/productController.js';
 import upload from '../middleware/multer.js';
-import authUser from '../middleware/auth.js'; // ✅ FIX: Import authUser
+import authUser from '../middleware/auth.js';
 import adminAuth from '../middleware/adminAuth.js';
 
 const productRouter = express.Router();
 
 // --- Admin Routes ---
-// ✅ FIX: Added authUser before adminAuth for security
 productRouter.post('/add', authUser, adminAuth, upload.fields([
     { name: 'image1', maxCount: 1 },
     { name: 'image2', maxCount: 1 },
@@ -21,7 +19,6 @@ productRouter.post('/add', authUser, adminAuth, upload.fields([
     { name: 'image4', maxCount: 1 }
 ]), addProduct);
 
-// ✅ FIX: Added authUser before adminAuth for security
 productRouter.delete('/:id', authUser, adminAuth, removeProduct);
 
 // --- Public Routes ---
